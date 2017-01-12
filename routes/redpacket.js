@@ -6,18 +6,185 @@
  */
 var express = require('express');
 var router = express.Router();
+
+var _path = '/Users/lingxiao/git/testingServer/public';
+
+
 /*
  * 路由
  *
  * /redpacket
  * */
+//首页
+router.get('/game/index', function(req, res){
+	var data = {
+		  "result": "SUCCESS",
+		  "message": "操作成功",
+		  "code": "1001",
+		  "url": "",
+		  "data": {
+		    "onlineCount": 1,
+		    "rooms": [
+		      {
+		        "id": 1,
+		        "gtid": 1,
+		        "name": "红包",
+		        "password": null,
+		        "paymoney": null,
+		        "getrate": null,
+		        "grabsecond": null,
+		        "countdown": null,
+		        "type": null,
+		        "people": null,
+		        "getmoney": 0,
+		        "mechine": 0
+		      },
+		      {
+		        "id": 2,
+		        "gtid": 2,
+		        "name": "牛牛",
+		        "password": null,
+		        "paymoney": null,
+		        "getrate": null,
+		        "grabsecond": null,
+		        "countdown": null,
+		        "type": null,
+		        "people": null,
+		        "getmoney": 0,
+		        "mechine": 0
+		      },
+		      {
+		        "id": 3,
+		        "gtid": 3,
+		        "name": "扫雷",
+		        "password": null,
+		        "paymoney": null,
+		        "getrate": null,
+		        "grabsecond": null,
+		        "countdown": null,
+		        "type": null,
+		        "people": null,
+		        "getmoney": 0,
+		        "mechine": 0
+		      }
+		    ],
+		    "description": "公告内容11111"
+		  }
+		}
+
+	res.json(data);
+});
+//登陆
+router.get('/app/user/login',function(req,res){
+	console.log(req.param('account')+','+req.param('password'));
+	var data = {
+		  "result": "SUCCESS",
+		  "message": "登陆成功",
+		  "code": "1001",
+		  "url": "",
+		  "data": {
+		    "id": 1,
+		    "account": "xiao1",
+		    "password": "E10ADC3949BA59ABBE56E057F20F883E",
+		    "nickname": "hahah",
+		    "money": 90,
+		    "lock": false,
+		    "unlocktime": null,
+		    "createtime": "2016-12-19 22:54:29",
+		    "pid": null,
+		    "uuid": "123123213",
+		    "type": 0,
+		    "phone": "13488888888",
+		    "sex": "男",
+		    "rebate": null,
+		    "sonusernum": null,
+		    "grid": null
+		  }
+		}
+	res.json(data);
+});
+//个人中心
+router.get('/app/user/info',function(req,res){
+	var data = {
+		  "result": "SUCCESS",
+		  "message": "",
+		  "code": "1001",
+		  "url": "",
+		  "data": {
+		    "id": 1,
+		    "account": "xiao1",
+		    "password": "E10ADC3949BA59ABBE56E057F20F883E",
+		    "nickname": "hahah",
+		    "money": 90,
+		    "lock": false,
+		    "unlocktime": null,
+		    "createtime": "2016-12-19 22:54:29",
+		    "pid": null,
+		    "uuid": "123123213",
+		    "type": 0,
+		    "phone": "13488888888",
+		    "sex": "男",
+		    "rebate": null,
+		    "sonusernum": null,
+		    "grid": null
+		  }
+		}
+	res.json(data);
+});
+//个人中心-金币转增
+router.get('/app/user/donation',function(req,res){
+	console.log(req.param('account'));
+	console.log(req.param('number'));
+	var data = {
+		  "result": "SUCCESS",
+		  "message": "操作成功",
+		  "code": "1001",
+		  "url": "",
+		  "data": ""
+		}
+	res.json(data);
+});
+//个人中心-信息更新
+router.get('/app/user/update',function(req,res){
+	//nickname='+nickname+'&phone='+phone+'&sex='+sex+'&password='+password,
+	console.log(req.param('nickname'));
+	console.log(req.param('phone'));
+	console.log(req.param('sex'));
+	console.log(req.param('password'));
+	var data = {
+		  "result": "SUCCESS",
+		  "message": "操作成功",
+		  "code": "1001",
+		  "url": "",
+		  "data": {
+		    "id": 1,
+		    "account": null,
+		    "password": "E10ADC3949BA59ABBE56E057F20F883E",
+		    "nickname": "hahah",
+		    "money": null,
+		    "lock": null,
+		    "unlocktime": null,
+		    "createtime": null,
+		    "pid": null,
+		    "uuid": null,
+		    "type": null,
+		    "phone": "13488888888",
+		    "sex": "男",
+		    "rebate": null,
+		    "sonusernum": null,
+		    "grid": null
+		  }
+		}
+	res.json(data);
+});
+
 //经纪人
 router.get('/app/user/popularize', function(req, res) {
 	//模拟数据
 	var data = {
 		  "result": "SUCCESS",
 		  "message": "操作成功",
-		  "code": "1001",
+		  "code": "1002",
 		  "url": "",
 		  "data": {
 		    "popularizes": [
@@ -78,10 +245,24 @@ router.get('/app/user/popularize', function(req, res) {
 		    }
 		  }
 		}
-    res.json(JSON.stringify(data));
+    res.json(data);
 });
-router.get('/index', function(req, res) {
-  //res.render('index.html');
+
+
+//图片
+//?type=type
+router.get('/game/qrcode', function(req, res) {
+  var type = req.param('type');
+  //判断是那个图片
+  if(type == 'bigimg'){
+  	res.sendFile(_path + '/redpacket/index.jpg');
+  }else if(type == 'service'){
+	res.sendFile(_path + '/redpacket/qrcode.jpg');
+  }else if(type == 'withdraw'){
+	res.sendFile(_path + '/redpacket/qrcode.jpg');
+  }else if(type == 'recharge'){
+	res.sendFile(_path + '/redpacket/qrcode.jpg');
+  }else{}
 });
 
 //返回router对象
