@@ -103,6 +103,79 @@ router.get('/app/user/login',function(req,res){
 		}
 	res.json(data);
 });
+//注册
+router.get('/app/user/reg',function(req,res){
+	console.log(req.param('account'));
+	console.log(req.param('password'));
+	console.log(req.param('uuid'));
+	console.log(req.param('nickname'));
+	var data = {
+		  "result": "SUCCESS",
+		  "message": "该帐号已注册",
+		  "code": "1001",
+		  "url": "",
+		  "data": ""
+		}
+	res.json(data);
+});
+//好友房
+router.get('/game/personal',function(req,res){
+	var data = {
+		  "result": "SUCCESS",
+		  "message": "操作成功",
+		  "code": "1001",
+		  "url": "",
+		  "data": [
+		    {
+		      "id": 2,
+		      "gtid": 2,
+		      "name": "牛牛",
+		      "password": 123456,
+		      "paymoney": 5,
+		      "getrate": 0.2,
+		      "grabsecond": null,
+		      "countdown": null,
+		      "type": 1,
+		      "people": 200,
+		      "getmoney": 0,
+		      "mechine": 10,
+		      "online": 10
+
+		    },
+		    {
+		      "id": 3,
+		      "gtid": 3,
+		      "name": "扫雷",
+		      "password": '',
+		      "paymoney": null,
+		      "getrate": null,
+		      "grabsecond": null,
+		      "countdown": null,
+		      "type": 1,
+		      "people": null,
+		      "getmoney": 0,
+		      "mechine": 0,
+		      "online": 10
+		    },
+		    {
+		      "id": 4,
+		      "gtid": 1,
+		      "name": "接龙",
+		      "password": null,
+		      "paymoney": null,
+		      "getrate": null,
+		      "grabsecond": null,
+		      "countdown": null,
+		      "type": 1,
+		      "people": null,
+		      "getmoney": 0,
+		      "mechine": 0,
+		      "online": 10
+		    }
+		  ]
+		}
+	res.json(data);
+});
 //个人中心
 router.get('/app/user/info',function(req,res){
 	var data = {
