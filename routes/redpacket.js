@@ -5,6 +5,7 @@
  * createTime: 2017-01-12
  */
 var express = require('express');
+var expressWs = require('express-ws')(express);
 var router = express.Router();
 
 var _path = '/Users/lingxiao/git/testingServer/public';
@@ -57,6 +58,20 @@ router.get('/game/index', function(req, res){
 		        "id": 3,
 		        "gtid": 3,
 		        "name": "扫雷",
+		        "password": null,
+		        "paymoney": null,
+		        "getrate": null,
+		        "grabsecond": null,
+		        "countdown": null,
+		        "type": null,
+		        "people": null,
+		        "getmoney": 0,
+		        "mechine": 0
+		      },
+		      {
+		        "id": 4,
+		        "gtid": 4,
+		        "name": "快乐十分",
 		        "password": null,
 		        "paymoney": null,
 		        "getrate": null,
@@ -336,6 +351,57 @@ router.get('/game/qrcode', function(req, res) {
   }else if(type == 'recharge'){
 	res.sendFile(_path + '/redpacket/qrcode.jpg');
   }else{}
+});
+
+//游戏部分
+//进入房间
+router.get('/game/in', function(req, res){
+	console.log('gid='+req.param('gid'));
+	console.log('password='+req.param('password'));
+
+	var data = {
+		  "result": "SUCCESS",
+		  "message": "操作成功",
+		  "code": "1001",
+		  "url": "",
+		  "data": ""
+		}
+	res.json(data);
+});
+//抢红包
+router.get('/game/getredpacket/:rid', function(req, res){
+	console.log('rid='+req.param('rid'));
+
+	var data = {
+		  "result": "SUCCESS",
+		  "message": "操作成功",
+		  "code": "1001",
+		  "url": "",
+		  "data": ""
+		}
+	res.json(data);
+});
+//检查红包是否被抢完了
+router.get('/game/checkredpacket/:rid', function(req, res){
+	console.log('rid='+req.param('rid'));
+
+	var data = {
+		  "result": "SUCCESS",
+		  "message": "操作成功",
+		  "code": "1001",
+		  "url": "",
+		  "data": ""
+		}
+	res.json(data);
+});
+
+/**
+ * 使用express-ws实现websocket
+ */
+router.ws('/ws',function(ws, req){
+	ws.on('message', function(msg) {
+	    ws.send(msg);
+	});
 });
 
 //返回router对象
