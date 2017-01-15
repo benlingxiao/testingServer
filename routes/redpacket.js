@@ -5,11 +5,10 @@
  * createTime: 2017-01-12
  */
 var express = require('express');
-var expressWs = require('express-ws')(express);
 var router = express.Router();
-
+//引用sockjs插件
+var sockjs = require('sockjs');
 var _path = '/Users/lingxiao/git/testingServer/public';
-
 
 /*
  * 路由
@@ -394,15 +393,65 @@ router.get('/game/checkredpacket/:rid', function(req, res){
 		}
 	res.json(data);
 });
+//红包详情
+router.get('/game/redpacketlog/:rid', function(req, res){
+	console.log('rid='+req.param('rid'));
+
+	var data = {
+		  "result": "SUCCESS",
+		  "message": "操作成功",
+		  "code": "1001",
+		  "url": "",
+		  "data": ""
+		}
+	res.json(data);
+});
 
 /**
  * 使用express-ws实现websocket
  */
-router.ws('/ws',function(ws, req){
-	ws.on('message', function(msg) {
-	    ws.send(msg);
-	});
-});
 
+//红包详情
+router.post('/ws/send', function(req, res){
+	var type = req.param('type');
+	console.log('------------------');
+	console.log(type);
+	console.log('------------------');
+	//进入房间
+	if(type == 0){
+		var data = {
+			  "result": "SUCCESS",
+			  "message": "操作成功",
+			  "code": "1001",
+			  "url": "",
+			  "data": ""
+		}
+	}else if(type == 1){
+		var data = {
+			  "result": "SUCCESS",
+			  "message": "操作成功",
+			  "code": "1002",
+			  "url": "",
+			  "data": {
+			  	"id": 1
+			  }
+		}
+	}else if(type == 2){
+		var data = {
+			  "result": "SUCCESS",
+			  "message": "操作成功",
+			  "code": "1003",
+			  "url": "",
+			  "data": {
+			  		"id": 2
+			  }
+		}
+	}else{}
+	if(websocket){
+		console.log(data);
+		websocket.send(data);
+	}
+	res.send(null);
+});
 //返回router对象
 module.exports = router;
