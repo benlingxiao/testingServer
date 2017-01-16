@@ -8,6 +8,7 @@ var express = require('express');
 var router = express.Router();
 //引用sockjs插件
 var sockjs = require('sockjs');
+var app = require('../app');
 var _path = '/Users/lingxiao/git/testingServer/public';
 
 /*
@@ -376,7 +377,9 @@ router.get('/game/getredpacket/:rid', function(req, res){
 		  "message": "操作成功",
 		  "code": "1001",
 		  "url": "",
-		  "data": ""
+		  "data": {
+		  	"isGet":false
+		  }
 		}
 	res.json(data);
 });
@@ -389,7 +392,9 @@ router.get('/game/checkredpacket/:rid', function(req, res){
 		  "message": "操作成功",
 		  "code": "1001",
 		  "url": "",
-		  "data": ""
+		  "data": {
+		  	"isComplete":false
+		  }
 		}
 	res.json(data);
 });
@@ -402,7 +407,27 @@ router.get('/game/redpacketlog/:rid', function(req, res){
 		  "message": "操作成功",
 		  "code": "1001",
 		  "url": "",
-		  "data": ""
+		  "data": {
+		  	"nickname":"哈哈",
+		  	"number": 4,
+		  	"total":5,
+		  	"money":9.9,
+		  	"list":[
+		  		{
+		  			"nickname":"haha",
+		  			"time":"11:11:11",
+		  			"money":12
+		  		},{
+		  			"nickname":"haha",
+		  			"time":"11:11:11",
+		  			"money":12
+		  		},{
+		  			"nickname":"haha",
+		  			"time":"11:11:11",
+		  			"money":12
+		  		},
+		  	]
+		  }
 		}
 	res.json(data);
 });
@@ -410,7 +435,6 @@ router.get('/game/redpacketlog/:rid', function(req, res){
 /**
  * 使用express-ws实现websocket
  */
-
 //红包详情
 router.post('/ws/send', function(req, res){
 	var type = req.param('type');

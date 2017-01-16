@@ -13,7 +13,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var app = express();
-var sockjs = require('sockjs');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -38,17 +37,6 @@ app.get('/',function(req, res){
 var redpacket = require('./routes/redpacket');
 //将测试路由挂载在app上
 app.use('/redpacket',redpacket);
-
-var echo = sockjs.createServer({ sockjs_url: 'http://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.js' });
-echo.on('connection', function(conn) {
-  console.log('来了来了');
-    conn.on('data', function(message) {
-        conn.write(message);
-    });
-    conn.on('close', function() {});
-});
-
-echo.installHandlers(app, {prefix:'/redpacket/ws'});
 
 
 // 如果上面的路由没有，就返回404
